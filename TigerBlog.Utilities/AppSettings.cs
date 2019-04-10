@@ -7,5 +7,6 @@ namespace TigerBlog.Utilities
     public class AppSettings
     {
         public string ConnectionString { get; set; } = "";
+        public string APIKey { get; set; } = "";
     }
 }

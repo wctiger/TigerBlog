@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using TigerBlog.Models.Interface.Repository;
 using TigerBlog.Models.Interface.Services;
@@ -19,5 +18,6 @@ namespace TigerBlog.Services
         {
             return _userRepo.QueryAllAsync();
         }
+        
     }
 }

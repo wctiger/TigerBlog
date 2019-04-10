@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TigerBlog.Models.Interface.Infrastructure
 {
-    public interface ISqlHelper
+    public interface ISqlContext
     {        
         /// <summary>
         /// Handles delete

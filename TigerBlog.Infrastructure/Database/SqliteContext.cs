@@ -11,7 +11,7 @@ using Microsoft.Extensions.Options;
 
 namespace TigerBlog.Infrastructure.Database
 {
-    public class SqliteContext : ISqlHelper
+    public class SqliteContext : ISqlContext
     {
         private string _connStr;
         public SqliteContext(IOptionsMonitor<AppSettings> settings)

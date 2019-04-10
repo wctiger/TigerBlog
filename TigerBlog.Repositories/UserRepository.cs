@@ -12,9 +12,9 @@ namespace TigerBlog.Repositories
 {
     public class UserRepository : RepositoryBase, IUserRepository
     {
-        private readonly ISqlHelper _dbContext;
+        private readonly ISqlContext _dbContext;
 
-        public UserRepository(ISqlHelper context, IMapper mapper) 
+        public UserRepository(ISqlContext context, IMapper mapper) 
             : base(mapper)
         {
             _dbContext = context;
