@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using TigerBlog.Utilities;
 using Microsoft.Extensions.Options;
+using System.Linq;
 
 namespace TigerBlog.Infrastructure.Database
 {
@@ -39,6 +40,19 @@ namespace TigerBlog.Infrastructure.Database
         public async Task<IEnumerable<T>> ExecuteQueryAsync<T>(string query, object predicate)
         {
             return await QueryAsync<T>(query, predicate);
+        }
+
+        public async Task<T> ExecuteCommandAndQueryAsync<T>(string command, string query, T data)
+        {            
+            T retObj = default;
+
+            using (var con = new SQLiteConnection(_connStr))
+            {
+                await con.ExecuteAsync(command, data); 
+                // If nothing was updated, still run query and return DB object
+                retObj = (await con.QueryAsync<T>(query, data)).FirstOrDefault();                
+            }
+            return retObj;
         }
 
         private async Task<IEnumerable<T>> QueryAsync<T>(string query, object param)

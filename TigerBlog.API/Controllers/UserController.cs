@@ -11,8 +11,7 @@ using TigerBlog.Models.Interface.Services;
 using TigerBlog.Models.ViewModel;
 
 namespace TigerBlog.API.Controllers
-{
-    [Authorize]
+{    
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase

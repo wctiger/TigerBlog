@@ -1,14 +1,17 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using TigerBlog.Infrastructure.Database;
@@ -20,7 +23,6 @@ using TigerBlog.Models.ViewModel;
 using TigerBlog.Repositories;
 using TigerBlog.Services;
 using TigerBlog.Utilities;
-using System.Collections.Generic;
 
 namespace TigerBlog.API
 {
@@ -36,9 +38,18 @@ namespace TigerBlog.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAutoMapper(RegisterModelMapping);
+            //services.AddAutoMapper(RegisterModelMapping);
+            services.RegisterAutoMapper();
+
             services.AddCors();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddMvc(opt =>
+            {
+                var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+                opt.Filters.Add(new AuthorizeFilter(policy));
+            })
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info() { Title = "Blog API", Version = "v1" });
@@ -52,7 +63,7 @@ namespace TigerBlog.API
                 c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
                 {
                     { "Bearer", new string[] { } }
-                });                                            
+                });
             });
 
             var appSettingsSection = Configuration.GetSection("AppSettings");
@@ -77,7 +88,7 @@ namespace TigerBlog.API
                 };
             });
 
-            RegisterDependencies(services);
+            services.RegisterDependencies();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -111,25 +122,6 @@ namespace TigerBlog.API
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Blog API v1"));
         }
-
-
-        private void RegisterDependencies(IServiceCollection services)
-        {
-            services.AddScoped<ISqlContext, SqliteContext>();
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IAuthService, AuthService>();
-        }
-
-        private void RegisterModelMapping(IMapperConfigurationExpression cfg)
-        {
-            // USER
-            cfg.CreateMap<User, UserDTO>()
-                .ForMember(dest => dest.CreatedTime, opt => opt.MapFrom(src => src.CreatedTime.ToString("yyyy-MM-dd HH:mm:ss")))
-                .ForMember(dest => dest.UpdatedTime, opt => opt.MapFrom(src => src.UpdatedTime.ToString("yyyy-MM-dd HH:mm:ss")));
-            cfg.CreateMap<UserDTO, User>()
-                .ForMember(dest => dest.CreatedTime, opt => opt.MapFrom(src => DateTime.Parse(src.CreatedTime)))
-                .ForMember(dest => dest.UpdatedTime, opt => opt.MapFrom(src => DateTime.Parse(src.UpdatedTime)));
-        }
+        
     }
 }

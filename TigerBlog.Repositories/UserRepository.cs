@@ -12,29 +12,27 @@ using TigerBlog.Models.ViewModel;
 namespace TigerBlog.Repositories
 {
     public class UserRepository : RepositoryBase, IUserRepository
-    {
-        private readonly ISqlContext _dbContext;
-
+    {        
         public UserRepository(ISqlContext context, IMapper mapper) 
-            : base(mapper)
+            : base(mapper, context)
         {
-            _dbContext = context;
+            DbContext = context;
         }
+
         public Task<int> DeleteAsync(int id)
         {
             string query = @"DELETE FROM USERS WHERE UserId = @Id";
-            return _dbContext.ExecuteNonQueryAsync(query, new { Id = id });
+            return DbContext.ExecuteNonQueryAsync(query, new { Id = id });
         }
 
         public async Task<User> GetByUserNameAsync(string username)
         {
             string query = @"SELECT * FROM Users WHERE UserName = @UserName";
-            var results = await _dbContext.ExecuteQueryAsync<UserDTO>(query, new { UserName = username });
-            User user = Mapper.Map<User>(results.FirstOrDefault());
-            return user;
+            var results = await DbContext.ExecuteQueryAsync<UserDTO>(query, new { UserName = username });
+            return Mapper.Map<User>(results.FirstOrDefault());            
         }
 
-        public Task<int> InsertAsync(User viewmodel)
+        public Task<int> InsertAsync(User viewmodel) 
         {
             string query = @"INSERT INTO USERS (UserName, Password, IsAdmin, DisplayName, Email, CreatedTime, UpdatedTime)
                              VALUES (@UserName, @Password, @IsAdmin, @DisplayName, @Email, @CreatedTime, @UpdatedTime)";
@@ -44,16 +42,14 @@ namespace TigerBlog.Repositories
 
             UserDTO model = Mapper.Map<UserDTO>(viewmodel);
 
-            return _dbContext.ExecuteNonQueryAsync(query, model);
+            return DbContext.ExecuteNonQueryAsync(query, model);
         }
 
         public async Task<IEnumerable<User>> QueryAllAsync()
         {
             string query = @"SELECT * FROM Users";
-            var result = await _dbContext.ExecuteQueryAsync<UserDTO>(query);
-            var users = Mapper.Map<IEnumerable<User>>(result);
-
-            return users;
+            var result = await DbContext.ExecuteQueryAsync<UserDTO>(query);
+            return Mapper.Map<IEnumerable<User>>(result);            
         }
 
         public Task<User> QueryAsync(int id)

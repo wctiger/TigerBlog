@@ -6,20 +6,11 @@ using System.Threading.Tasks;
 namespace TigerBlog.Models.Interface.Infrastructure
 {
     public interface ISqlContext
-    {        
-        /// <summary>
-        /// Handles delete
-        /// </summary>
-        /// <param name="command"></param>
-        /// <returns></returns>
-        Task<int> ExecuteNonQueryAsync<T>(string command, T data);
+    {
+        Task<T> ExecuteCommandAndQueryAsync<T>(string command, string query, T data);
 
-        /// <summary>
-        /// Handles R
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="plainQuery"></param>
-        /// <returns></returns>
+        Task<int> ExecuteNonQueryAsync<T>(string command, T data);
+        
         Task<IEnumerable<T>> ExecuteQueryAsync<T>(string plainQuery);
 
         Task<IEnumerable<T>> ExecuteQueryAsync<T>(string query, object predicate);
