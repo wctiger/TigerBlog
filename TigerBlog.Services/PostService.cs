@@ -16,9 +16,10 @@ namespace TigerBlog.Services
             _postRepository = postRepository;
         }
 
-        public Task<bool> DeletePostAsync(int id)
+        public async Task<bool> DeletePostAsync(int id)
         {
-            throw new NotImplementedException();
+            var result = await _postRepository.DeleteAsync(id);
+            return result > 0;
         }
 
         public Task<IEnumerable<Post>> GetAllPostsAsync()

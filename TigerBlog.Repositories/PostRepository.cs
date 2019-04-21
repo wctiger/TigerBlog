@@ -19,7 +19,8 @@ namespace TigerBlog.Repositories
 
         public Task<int> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            string command = @"DELETE FROM Posts WHERE PostId = @PostId";
+            return DbContext.ExecuteNonQueryAsync(command, new { PostId = id });
         }
 
         public async Task<IEnumerable<Post>> GetAllByOwner(int userId)
@@ -44,7 +45,7 @@ namespace TigerBlog.Repositories
 
         public Task<int> InsertAsync(Post viewmodel)
         {
-            string query = @"INSERT INTO Posts (Owner, Title, Summary, Content, IsArchived, CreatedTime, UpdatedTime)
+            string command = @"INSERT INTO Posts (Owner, Title, Summary, Content, IsArchived, CreatedTime, UpdatedTime)
                              VALUES (@Owner, @Title, @Summary, @Content, @IsArchived, @CreatedTime, @UpdatedTime)";
 
             DateTime now = DateTime.Now;
@@ -54,7 +55,7 @@ namespace TigerBlog.Repositories
 
             PostDTO model = Mapper.Map<PostDTO>(viewmodel);
 
-            return DbContext.ExecuteNonQueryAsync(query, model);
+            return DbContext.ExecuteNonQueryAsync(command, model);
         }
 
         public Task<IEnumerable<Post>> QueryAllAsync()
