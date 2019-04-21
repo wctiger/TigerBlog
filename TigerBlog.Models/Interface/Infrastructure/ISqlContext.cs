@@ -10,9 +10,9 @@ namespace TigerBlog.Models.Interface.Infrastructure
         /// <summary>
         /// Handles delete
         /// </summary>
-        /// <param name="deleteQuery"></param>
+        /// <param name="command"></param>
         /// <returns></returns>
-        int ExecuteDelete(string deleteQuery);
+        Task<int> ExecuteNonQueryAsync<T>(string command, T data);
 
         /// <summary>
         /// Handles R
@@ -21,5 +21,7 @@ namespace TigerBlog.Models.Interface.Infrastructure
         /// <param name="plainQuery"></param>
         /// <returns></returns>
         Task<IEnumerable<T>> ExecuteQueryAsync<T>(string plainQuery);
+
+        Task<IEnumerable<T>> ExecuteQueryAsync<T>(string query, object predicate);
     }
 }

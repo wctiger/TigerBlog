@@ -8,5 +8,6 @@ namespace TigerBlog.Models.Interface.Repository
 {
     public interface IUserRepository : IRepository<User>
     {        
+        System.Threading.Tasks.Task<User> GetByUserNameAsync(string username);
     }
 }

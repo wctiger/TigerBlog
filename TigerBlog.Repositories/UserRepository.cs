@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TigerBlog.Models.DTO;
@@ -21,12 +22,29 @@ namespace TigerBlog.Repositories
         }
         public Task<int> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            string query = @"DELETE FROM USERS WHERE UserId = @Id";
+            return _dbContext.ExecuteNonQueryAsync(query, new { Id = id });
+        }
+
+        public async Task<User> GetByUserNameAsync(string username)
+        {
+            string query = @"SELECT * FROM Users WHERE UserName = @UserName";
+            var results = await _dbContext.ExecuteQueryAsync<UserDTO>(query, new { UserName = username });
+            User user = Mapper.Map<User>(results.FirstOrDefault());
+            return user;
         }
 
         public Task<int> InsertAsync(User viewmodel)
         {
-            throw new NotImplementedException();
+            string query = @"INSERT INTO USERS (UserName, Password, IsAdmin, DisplayName, Email, CreatedTime, UpdatedTime)
+                             VALUES (@UserName, @Password, @IsAdmin, @DisplayName, @Email, @CreatedTime, @UpdatedTime)";
+            DateTime now = DateTime.Now;
+            viewmodel.UpdatedTime = now;
+            viewmodel.CreatedTime = now;
+
+            UserDTO model = Mapper.Map<UserDTO>(viewmodel);
+
+            return _dbContext.ExecuteNonQueryAsync(query, model);
         }
 
         public async Task<IEnumerable<User>> QueryAllAsync()

@@ -19,18 +19,35 @@ namespace TigerBlog.Infrastructure.Database
             _connStr = settings.CurrentValue.ConnectionString;
         }
 
-        public int ExecuteDelete(string deleteQuery)
+        public async Task<int> ExecuteNonQueryAsync<T>(string query, T data)
         {
-            throw new NotImplementedException();
-        }
+            int rowCount = 0;
+
+            using (var con = new SQLiteConnection(_connStr))
+            {                
+                rowCount = await con.ExecuteAsync(query, data);
+            }
+
+            return rowCount;
+        }            
 
         public async Task<IEnumerable<T>> ExecuteQueryAsync<T>(string plainQuery)
+        {
+            return await QueryAsync<T>(plainQuery, null);
+        }
+
+        public async Task<IEnumerable<T>> ExecuteQueryAsync<T>(string query, object predicate)
+        {
+            return await QueryAsync<T>(query, predicate);
+        }
+
+        private async Task<IEnumerable<T>> QueryAsync<T>(string query, object param)
         {
             IEnumerable<T> result;
 
             using (var con = new SQLiteConnection(_connStr))
             {
-                result = await con.QueryAsync<T>(plainQuery);
+                result = await con.QueryAsync<T>(query, param);
             }
 
             return result;

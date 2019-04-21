@@ -9,5 +9,9 @@ namespace TigerBlog.Models.Interface.Services
     public interface IUserService
     {
         Task<IEnumerable<User>> GetAllUsersAsync();
+
+        Task<bool> InsertUserAsync(User user);
+
+        Task<bool> DeleteUserAsync(int id);
     }
 }

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using TigerBlog.Models.Interface.Services;
+using TigerBlog.Models.ViewModel;
 
 namespace TigerBlog.API.Controllers
 {
@@ -27,7 +28,8 @@ namespace TigerBlog.API.Controllers
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
-            _logger.LogInformation($"test information");
+            _logger.LogInformation($"test get all");
+            var a = HttpContext.User.Identity.Name;
             return Ok(await _userService.GetAllUsersAsync());
         }
 
@@ -39,21 +41,24 @@ namespace TigerBlog.API.Controllers
         }
 
         // POST: api/User
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpPost("Create")]
+        public async Task<IActionResult> Post(User user)
         {
+            _logger.LogInformation($"test insert");
+            return Ok(await _userService.InsertUserAsync(user));
         }
-
-        // PUT: api/User/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        
+        [HttpPut("Update")]
+        public Task<IActionResult> Put(User user)
         {
+            throw new NotImplementedException();
         }
 
         // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("Delete/{id}")]
+        public async Task<IActionResult> Delete(int id)
         {
+            return Ok(await _userService.DeleteUserAsync(id));
         }
     }
 }

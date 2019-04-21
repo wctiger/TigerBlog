@@ -3,23 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28729.10
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TigerBlog.API", "TigerBlog.API\TigerBlog.API.csproj", "{7914CBEC-43C1-4B05-A1D3-6EAC4E39212D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TigerBlog.API", "TigerBlog.API\TigerBlog.API.csproj", "{7914CBEC-43C1-4B05-A1D3-6EAC4E39212D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TigerBlog.Models", "TigerBlog.Models\TigerBlog.Models.csproj", "{51AFAD07-6101-406C-A201-9961075435A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TigerBlog.Models", "TigerBlog.Models\TigerBlog.Models.csproj", "{51AFAD07-6101-406C-A201-9961075435A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TigerBlog.Repositories", "TigerBlog.Repositories\TigerBlog.Repositories.csproj", "{A775C579-0664-46DA-8215-E7CDE685AF1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TigerBlog.Repositories", "TigerBlog.Repositories\TigerBlog.Repositories.csproj", "{A775C579-0664-46DA-8215-E7CDE685AF1F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TigerBlog.Infrastructure", "TigerBlog.Infrastructure\TigerBlog.Infrastructure.csproj", "{7CA66536-0662-47E7-9BD7-55D359E04904}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TigerBlog.Infrastructure", "TigerBlog.Infrastructure\TigerBlog.Infrastructure.csproj", "{7CA66536-0662-47E7-9BD7-55D359E04904}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TigerBlog.Services", "TigerBlog.Services\TigerBlog.Services.csproj", "{E03A0568-388E-4F7C-8C5D-AC0BF653E4C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TigerBlog.Services", "TigerBlog.Services\TigerBlog.Services.csproj", "{E03A0568-388E-4F7C-8C5D-AC0BF653E4C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TigerBlog.Utilities", "TigerBlog.Utilities\TigerBlog.Utilities.csproj", "{73C194DD-6FCD-456C-AFFE-C418204ADE91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TigerBlog.Utilities", "TigerBlog.Utilities\TigerBlog.Utilities.csproj", "{73C194DD-6FCD-456C-AFFE-C418204ADE91}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{681B8F62-C0FE-4BD3-9CD7-CFC3BDA9B2D0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{73C23F18-CFC8-4FC2-8247-60C176593998}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{62F20805-3257-4D6F-8D18-E0DB7857AFAF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utilities", "Utilities", "{E10C7938-7B72-44E4-9CD1-1BD8150B0DFB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,7 +63,7 @@ Global
 		{A775C579-0664-46DA-8215-E7CDE685AF1F} = {681B8F62-C0FE-4BD3-9CD7-CFC3BDA9B2D0}
 		{7CA66536-0662-47E7-9BD7-55D359E04904} = {62F20805-3257-4D6F-8D18-E0DB7857AFAF}
 		{E03A0568-388E-4F7C-8C5D-AC0BF653E4C7} = {681B8F62-C0FE-4BD3-9CD7-CFC3BDA9B2D0}
-		{73C194DD-6FCD-456C-AFFE-C418204ADE91} = {62F20805-3257-4D6F-8D18-E0DB7857AFAF}
+		{73C194DD-6FCD-456C-AFFE-C418204ADE91} = {E10C7938-7B72-44E4-9CD1-1BD8150B0DFB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B16B1171-44B9-4B98-8E11-30FE17C1D5D4}
