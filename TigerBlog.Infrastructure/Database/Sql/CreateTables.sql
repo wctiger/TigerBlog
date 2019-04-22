@@ -21,6 +21,6 @@ CREATE TABLE Posts(
     IsArchived Boolean,
     CreatedTime text,
     UpdatedTime text,
-    FOREIGN KEY (Owner) REFERENCES User(UserId)
+    FOREIGN KEY (Owner) REFERENCES Users(UserId)
 );
 
