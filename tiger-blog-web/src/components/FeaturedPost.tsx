@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Post } from '../models/post';
-import { Link as RouterLink } from 'react-router-dom';
+import Link from '../styles/components/Link';
 
 interface IProps {
   post?: Post;
@@ -37,26 +37,6 @@ const Background = styled.div`
   border-radius: 5px;
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
-`;
-
-const Link = styled(RouterLink)`
-  font-weight: 300;
-  display: inline-block;
-  padding: 0rem 0.3rem;
-  transform: translateY(0.7rem);
-  margin-left: 1rem;
-  transition: all 0.3s ease-out;
-
-  &:hover {
-    background: ${props => props.theme.palette.secondary.main};
-  }
-
-  &:link,
-  &:visited {
-    text-decoration: none;
-    color: ${props => props.theme.palette.primary.main};
-    font-size: 1.4rem;
-  }
 `;
 
 const Foreground = styled.div`

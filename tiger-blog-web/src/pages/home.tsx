@@ -14,9 +14,15 @@ const Home = () => {
           UpdatedTime: new Date(featured.UpdatedTime)
         }}
       />
-      <BlogPost test={122} />
-      {[1, 2, 3, 4].map(n => (
-        <BlogPost key={n} test={n} />
+      {MOCKDATA.slice(0, 5).map(post => (
+        <BlogPost
+          key={post.PostId}
+          post={{
+            ...post,
+            CreatedTime: new Date(post.CreatedTime),
+            UpdatedTime: new Date(post.UpdatedTime)
+          }}
+        />
       ))}
     </div>
   );
