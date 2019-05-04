@@ -1,15 +1,20 @@
 import {
   AppBar,
-  Button,
   createStyles,
+  IconButton,
   Theme,
   Toolbar,
+  Tooltip,
   Typography,
   withStyles
 } from '@material-ui/core';
-import React from 'react';
-import SearchBox from './SearchBox';
+import { Brightness2, WbSunny } from '@material-ui/icons';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AppContext } from '../App';
+import SearchBox from './SearchBox';
+import User from './User';
+import styled from 'styled-components';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -27,6 +32,7 @@ const styles = (theme: Theme) =>
   });
 
 const TopBar: React.FunctionComponent<any> = props => {
+  const context = useContext(AppContext);
   return (
     <AppBar position="static">
       <Toolbar>
@@ -36,10 +42,31 @@ const TopBar: React.FunctionComponent<any> = props => {
           </Link>
         </Typography>
         <SearchBox />
-        <Button className={props.classes.top}>{'Login'}</Button>
+        <Tooltip title="Toggle light/dark mode">
+          <StyledIconButton
+            onClick={() =>
+              context.themeType === 'light'
+                ? context.setTheme('dark')
+                : context.setTheme('light')
+            }
+          >
+            {context.themeType === 'light' ? (
+              <Brightness2 className={props.classes.top} />
+            ) : (
+              <WbSunny className={props.classes.top} />
+            )}
+          </StyledIconButton>
+        </Tooltip>
+        <User className={props.classes.top} />
       </Toolbar>
     </AppBar>
   );
 };
+
+const StyledIconButton = styled<any>(IconButton)`
+  && {
+    margin-right: 1.5rem;
+  }
+`;
 
 export default withStyles(styles)(TopBar);

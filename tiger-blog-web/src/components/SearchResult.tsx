@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Post } from '../models/post';
+import { PostModel } from '../models/post';
 import { RouteComponentProps, withRouter } from 'react-router';
 
 interface IProps extends RouteComponentProps<any> {
-  data: Post[];
+  data: PostModel[];
   filter?: string;
   onSelect?: () => void;
 }

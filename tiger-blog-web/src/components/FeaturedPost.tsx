@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Post } from '../models/post';
+import { PostModel } from '../models/post';
 import Link from '../styles/components/Link';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 interface IProps {
-  post?: Post;
+  post?: PostModel;
 }
 
 const FeaturedPost: React.FunctionComponent<IProps> = props => {

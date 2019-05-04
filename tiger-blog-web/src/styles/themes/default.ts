@@ -1,19 +1,20 @@
-import styled from 'styled-components';
-import { createMuiTheme } from '@material-ui/core/styles';
-import { purple, green, amber } from '@material-ui/core/colors';
+import { amber, green } from '@material-ui/core/colors';
+import { ThemeOptions } from '@material-ui/core/styles/createMuiTheme';
 
-const muiTheme = createMuiTheme({
+const muiTheme: ThemeOptions = {
   palette: {
     primary: {
       main: green[500],
       contrastText: '#fff'
     },
-    secondary: amber
+    secondary: amber,
+    type: 'light'
   },
   typography: {
     fontFamily: ['Lato', 'Roboto', 'sans-serif'].join(','),
-    htmlFontSize: 10
+    htmlFontSize: 10,
+    useNextVariants: true
   }
-});
+};
 
 export default muiTheme;

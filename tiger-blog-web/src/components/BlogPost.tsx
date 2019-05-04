@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Post } from '../models/post';
+import { PostModel } from '../models/post';
 import Link from '../styles/components/Link';
 
 interface IProps {
-  post: Post;
+  post: PostModel;
 }
 
 const BlogPost: React.FunctionComponent<IProps> = ({ post }: IProps) => {
@@ -34,7 +34,8 @@ const PostCard = styled.div`
   background: ${props => props.theme.palette.background.paper};
   margin: 1.5rem 0;
   display: flex;
-  border: 1px solid #e0e0e0;
+  border: 1px solid
+    ${props => (props.theme.palette.type === 'light' ? '#e0e0e0' : '#424242')};
   border-radius: 5px;
   box-shadow: 0 0.8rem 1.5rem rgba(0, 0, 0, 0.15);
   overflow: hidden;

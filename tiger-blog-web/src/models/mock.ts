@@ -1,4 +1,4 @@
-import { Post } from './post';
+import { PostModel } from './post';
 export const MOCKDATA = [
   {
     PostId: 1,
