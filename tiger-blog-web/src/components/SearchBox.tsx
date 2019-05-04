@@ -20,10 +20,10 @@ const SearchBox: React.FunctionComponent<IProps> = props => {
       <input
         type="text"
         placeholder={'Search blog posts'}
+        value={searchTerm}
         onChange={e => setSearchTerm(e.target.value)}
-        onBlur={() => setSearchTerm('')}
       />
-      {searchTerm && searchTerm.length > 2 && (
+      {searchTerm && searchTerm.length > 1 && (
         <SearchResult
           filter={searchTerm}
           data={MOCKDATA.map(d => ({
@@ -31,6 +31,7 @@ const SearchBox: React.FunctionComponent<IProps> = props => {
             CreatedTime: new Date(d.CreatedTime),
             UpdatedTime: new Date(d.UpdatedTime)
           }))}
+          onSelect={() => setSearchTerm('')}
         />
       )}
     </Styled>

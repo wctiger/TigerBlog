@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Post } from '../models/post';
 import Link from '../styles/components/Link';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 interface IProps {
   post?: Post;
@@ -12,7 +13,7 @@ const FeaturedPost: React.FunctionComponent<IProps> = props => {
     <Container>
       <Foreground>
         <h2>{props.post.Title}</h2>
-        <Link to={'/'}>Read More &rarr;</Link>
+        <Link to={'/posts/' + props.post.PostId}>Read More &rarr;</Link>
         <p>{props.post.Summary}</p>
       </Foreground>
       <Background />

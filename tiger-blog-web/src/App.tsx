@@ -21,7 +21,7 @@ const App = () => {
           <ViewPort>
             <Route path="/" exact component={Home} />
             <Route path="/user/blog/" exact component={PostList} />
-            <Route path="/user/post/" exact component={Post} />
+            <Route path="/posts/:id" component={Post} />
           </ViewPort>
           <Footer />
         </Router>

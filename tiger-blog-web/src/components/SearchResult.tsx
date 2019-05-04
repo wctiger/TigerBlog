@@ -1,10 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Post } from '../models/post';
+import { RouteComponentProps, withRouter } from 'react-router';
 
-interface IProps {
+interface IProps extends RouteComponentProps<any> {
   data: Post[];
   filter?: string;
+  onSelect?: () => void;
 }
 
 const SearchResult: React.FunctionComponent<IProps> = props => {
@@ -12,7 +14,17 @@ const SearchResult: React.FunctionComponent<IProps> = props => {
   return (
     <Popover>
       {filteredData.length ? (
-        filteredData.map(p => <MenuItem key={p.PostId}>{p.Title}</MenuItem>)
+        filteredData.map(p => (
+          <MenuItem
+            key={p.PostId}
+            onClick={() => {
+              props.onSelect();
+              props.history.push('/posts/' + p.PostId);
+            }}
+          >
+            {p.Title}
+          </MenuItem>
+        ))
       ) : (
         <NoResult>No Results Found.</NoResult>
       )}
@@ -60,4 +72,4 @@ const NoResult = styled.div`
   color: ${props => props.theme.palette.text.primary};
 `;
 
-export default SearchResult;
+export default withRouter(SearchResult);

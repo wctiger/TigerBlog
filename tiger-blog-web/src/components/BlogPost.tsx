@@ -23,7 +23,7 @@ const BlogPost: React.FunctionComponent<IProps> = ({ post }: IProps) => {
           <p>{post.Summary}</p>
         </div>
         <div className="link">
-          <Link to={'/'}>Continue Reading...</Link>
+          <Link to={'/posts/' + post.PostId}>Continue Reading...</Link>
         </div>
       </Content>
     </PostCard>
