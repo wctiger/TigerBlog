@@ -22,6 +22,26 @@ const GlobalStyle = createGlobalStyle`
         line-height: 1.5;        
     }
 
+    h1 {
+        font-size: 3rem;
+    }
+
+    h2 {
+        font-size: 2.4rem;
+    }
+
+    h3 {
+        font-size: 2.2rem;
+    }
+
+    h4 {
+        font-size: 2rem;
+    }
+
+    h5 {
+        font-size: 1.8rem;
+    }
+
     p {
         font-size: 1.6rem;
     }

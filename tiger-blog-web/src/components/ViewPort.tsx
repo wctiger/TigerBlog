@@ -9,6 +9,7 @@ const ViewPort = props => (
 
 const Content = styled.div`
   width: 60vw;
+  position: relative;
 `;
 
 const Container = styled.div`

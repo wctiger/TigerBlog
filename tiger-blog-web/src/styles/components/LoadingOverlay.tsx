@@ -16,6 +16,8 @@ const LoadingOverlay = (props: IProps) => {
 
 const OverlayWrapper = styled.div`
   position: absolute;
+  left: 0;
+  top: 0;
   height: 100%;
   width: 100%;
   z-index: 9999;

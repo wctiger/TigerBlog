@@ -1,5 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { ReactComponent as StackOverflow } from '../assets/icons8-stack-overflow.svg';
+import { ReactComponent as Linkedin } from '../assets/icons8-linkedin.svg';
+import { ReactComponent as Github } from '../assets/icons8-github.svg';
 
 const StyleWrapper = styled.div`
   background: ${props => props.theme.palette.background.paper};
@@ -21,7 +24,7 @@ const StyleWrapper = styled.div`
 
       & > li {
         display: inline-block;
-        padding: 1rem;
+        padding: 0.75rem 1rem;
         margin: 0 0.2rem;
         cursor: pointer;
 
@@ -39,9 +42,15 @@ const Footer = () => {
       <div>
         <span className="copyright">&copy; 2019 vvctiger</span>
         <ul className="links">
-          <li>Gi</li>
-          <li>St</li>
-          <li>Li</li>
+          <li>
+            <Github />
+          </li>
+          <li>
+            <StackOverflow />
+          </li>
+          <li>
+            <Linkedin />
+          </li>
         </ul>
       </div>
     </StyleWrapper>
