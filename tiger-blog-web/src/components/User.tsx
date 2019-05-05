@@ -51,7 +51,15 @@ const User: React.FunctionComponent<IProps> = props => {
                   />
                 </ListItem>
                 <Divider />
-                <ListItem button onClick={() => console.log('create new')}>
+                <ListItem
+                  button
+                  onClick={() =>
+                    context.setGlobalMessage({
+                      type: 'error',
+                      message: 'create new is not available'
+                    })
+                  }
+                >
                   <ListItemIcon>
                     <Create />
                   </ListItemIcon>

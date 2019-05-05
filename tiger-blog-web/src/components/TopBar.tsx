@@ -6,7 +6,8 @@ import {
   Toolbar,
   Tooltip,
   Typography,
-  withStyles
+  withStyles,
+  Snackbar
 } from '@material-ui/core';
 import { Brightness2, WbSunny } from '@material-ui/icons';
 import React, { useContext } from 'react';
@@ -15,6 +16,7 @@ import { AppContext } from '../App';
 import SearchBox from './SearchBox';
 import User from './User';
 import styled from 'styled-components';
+import { green, amber } from '@material-ui/core/colors';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -41,6 +43,16 @@ const TopBar: React.FunctionComponent<any> = props => {
             TigerBlog
           </Link>
         </Typography>
+        {context.globalMessage && (
+          <StyledSnackbar
+            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            className={context.globalMessage.type}
+            open={true}
+            autoHideDuration={5000}
+            onClose={() => context.setGlobalMessage(null)}
+            message={<span>{context.globalMessage.message}</span>}
+          />
+        )}
         <SearchBox />
         <Tooltip title="Toggle light/dark mode">
           <StyledIconButton
@@ -66,6 +78,23 @@ const TopBar: React.FunctionComponent<any> = props => {
 const StyledIconButton = styled<any>(IconButton)`
   && {
     margin-right: 1.5rem;
+  }
+`;
+
+const StyledSnackbar = styled<any>(Snackbar)`
+  margin-top: 5rem;
+
+  &.success {
+    background-color: ${green[600]};
+  }
+  &.error {
+    background-color: ${props => props.theme.palette.error.dark};
+  }
+  &.info {
+    background-color: ${props => props.theme.palette.primary.dark};
+  }
+  &.warning {
+    background-color: ${amber[600]};
   }
 `;
 

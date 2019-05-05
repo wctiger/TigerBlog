@@ -16,7 +16,7 @@ const Container = styled.div`
   justify-content: center;
   margin-top: 3rem;
   margin-bottom: 6rem;
-  min-height: 100vh;
+  min-height: 80vh;
 `;
 
 export default ViewPort;

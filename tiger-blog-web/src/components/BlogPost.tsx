@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { PostModel } from '../models/post';
 import Link from '../styles/components/Link';
+import moment from 'moment';
+import { Tooltip } from '@material-ui/core';
 
 interface IProps {
   post: PostModel;
@@ -15,8 +17,12 @@ const BlogPost: React.FunctionComponent<IProps> = ({ post }: IProps) => {
         <div className="title">
           <h3>{post.Title}</h3>
           <p>
-            <span>{post.CreatedTime.toDateString()}</span>
-            <span>{'location'}</span>
+            <Tooltip
+              title={moment(post.CreatedTime).format('YYYY-MM-DD hh:mm a')}
+              placement="right"
+            >
+              <span>{moment(post.CreatedTime).fromNow()}</span>
+            </Tooltip>
           </p>
         </div>
         <div className="text">

@@ -5,6 +5,7 @@ import { ThemeProvider } from 'styled-components';
 import Footer from './components/Footer';
 import TopBar from './components/TopBar';
 import ViewPort from './components/ViewPort';
+import BackToTop from './components/BackToTop';
 import Home from './pages/home';
 import Post from './pages/post';
 import PostList from './pages/post-list';
@@ -24,6 +25,9 @@ const App = () => {
   appState.setUser = user => {
     setAppState({ ...appState, authenticatedUser: user });
   };
+  appState.setGlobalMessage = message => {
+    setAppState({ ...appState, globalMessage: message });
+  };
 
   const theme = createMuiTheme({
     ...defaultTheme,
@@ -42,6 +46,7 @@ const App = () => {
               <Route path="/user/blog/" exact component={PostList} />
               <Route path="/posts/:id" component={Post} />
             </ViewPort>
+            <BackToTop />
             <Footer />
           </Router>
         </ThemeProvider>
