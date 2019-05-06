@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { PostModel } from '../models/post';
-import Link from '../styles/components/Link';
+import AppLink from '../styles/components/Link';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 interface IProps {
@@ -13,7 +13,7 @@ const FeaturedPost: React.FunctionComponent<IProps> = props => {
     <Container>
       <Foreground>
         <h2>{props.post.Title}</h2>
-        <Link to={'/posts/' + props.post.PostId}>Read More &rarr;</Link>
+        <AppLink to={'/posts/' + props.post.PostId}>Read More &rarr;</AppLink>
         <p>{props.post.Summary}</p>
       </Foreground>
       <Background />
@@ -67,7 +67,7 @@ const Foreground = styled.div`
     filter: blur(0.15rem);
   }
 
-  &:hover > ${Link} {
+  &:hover > ${AppLink} {
     background: ${props => props.theme.palette.secondary.main};
   }
 `;

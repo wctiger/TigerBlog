@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link as RouterLink } from 'react-router-dom';
 
-const Link = styled(RouterLink)`
+const AppLink = styled(RouterLink)`
   font-weight: 300;
   display: inline-block;
   padding: 0rem 0.3rem;
@@ -26,4 +26,4 @@ const Link = styled(RouterLink)`
   }
 `;
 
-export default Link;
+export default AppLink;

@@ -6,6 +6,7 @@ import PostHeader from '../components/PostHeader';
 import PostContent from '../components/PostContent';
 import moment from 'moment';
 import { MOCKPOST } from '../models/mock';
+import { AppContext } from '../App';
 
 interface IState {
   isLoading: boolean;
@@ -31,12 +32,12 @@ class Post extends React.Component<any, IState> {
           Owner: 'vvctiger',
           Summary: '🍕🍔😂😂',
           IsArchived: false,
-          Content: MOCKPOST,
+          Content: '',
           CreatedTime: moment('2019-01-01').toDate(),
           UpdatedTime: moment('2019-01-01').toDate()
         }
       });
-    }, 1500);
+    }, 500);
   }
 
   render() {
@@ -45,10 +46,19 @@ class Post extends React.Component<any, IState> {
         {this.state.isLoading ? (
           <LoadingOverlay size={60} />
         ) : (
-          <div>
-            <PostHeader post={this.state.post} />
-            <PostContent post={this.state.post} />
-          </div>
+          <AppContext.Consumer>
+            {context => (
+              <div>
+                <PostHeader post={this.state.post} />
+                <PostContent
+                  post={{
+                    ...this.state.post,
+                    Content: context.testPostContent
+                  }}
+                />
+              </div>
+            )}
+          </AppContext.Consumer>
         )}
       </React.Fragment>
     );

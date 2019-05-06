@@ -8,7 +8,7 @@ import ViewPort from './components/ViewPort';
 import BackToTop from './components/BackToTop';
 import Home from './pages/home';
 import Post from './pages/post';
-import PostList from './pages/post-list';
+import NewPost from './pages/new-post';
 import GlobalStyle from './styles/components/GlobalStyle';
 import defaultTheme from './styles/themes/default';
 import { ContextViewModel } from './models/context';
@@ -28,6 +28,9 @@ const App = () => {
   appState.setGlobalMessage = message => {
     setAppState({ ...appState, globalMessage: message });
   };
+  appState.setTestPostContent = content => {
+    setAppState({ ...appState, testPostContent: content });
+  };
 
   const theme = createMuiTheme({
     ...defaultTheme,
@@ -43,7 +46,8 @@ const App = () => {
             <TopBar />
             <ViewPort>
               <Route path="/" exact component={Home} />
-              <Route path="/user/blog/" exact component={PostList} />
+              <Route path="/new" exact component={NewPost} />
+              <Route path="/edit/:id" exact component={NewPost} />
               <Route path="/posts/:id" component={Post} />
             </ViewPort>
             <BackToTop />

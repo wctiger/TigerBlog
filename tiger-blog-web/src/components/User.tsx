@@ -7,14 +7,17 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  Divider
+  Divider,
+  Collapse,
+  Fade
 } from '@material-ui/core';
 import styled from 'styled-components';
 import LoginBox from './LoginBox';
 import { AppContext } from '../App';
 import { ExitToApp, Create } from '@material-ui/icons';
+import { withRouter, RouteComponentProps } from 'react-router';
 
-interface IProps {
+interface IProps extends RouteComponentProps {
   className?: string;
 }
 
@@ -33,7 +36,7 @@ const User: React.FunctionComponent<IProps> = props => {
                 : 'U'}
             </StyledAvatar>
           </Tooltip>
-          {menuOpen && (
+          <Fade in={menuOpen}>
             <UserMenu>
               <List>
                 <ListItem dense>
@@ -53,12 +56,10 @@ const User: React.FunctionComponent<IProps> = props => {
                 <Divider />
                 <ListItem
                   button
-                  onClick={() =>
-                    context.setGlobalMessage({
-                      type: 'error',
-                      message: 'create new is not available'
-                    })
-                  }
+                  onClick={() => {
+                    props.history.push('/new');
+                    setMenuOpen(false);
+                  }}
                 >
                   <ListItemIcon>
                     <Create />
@@ -79,7 +80,7 @@ const User: React.FunctionComponent<IProps> = props => {
                 </ListItem>
               </List>
             </UserMenu>
-          )}
+          </Fade>
         </React.Fragment>
       ) : (
         <Button className={props.className} onClick={() => setLoginOpen(true)}>
@@ -123,4 +124,4 @@ const UserMenu = styled.div`
   }
 `;
 
-export default User;
+export default withRouter(User);

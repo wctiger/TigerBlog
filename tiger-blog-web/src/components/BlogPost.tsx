@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { PostModel } from '../models/post';
-import Link from '../styles/components/Link';
+import AppLink from '../styles/components/Link';
 import moment from 'moment';
 import { Tooltip } from '@material-ui/core';
 
@@ -29,7 +29,7 @@ const BlogPost: React.FunctionComponent<IProps> = ({ post }: IProps) => {
           <p>{post.Summary}</p>
         </div>
         <div className="link">
-          <Link to={'/posts/' + post.PostId}>Continue Reading...</Link>
+          <AppLink to={'/posts/' + post.PostId}>Continue Reading...</AppLink>
         </div>
       </Content>
     </PostCard>

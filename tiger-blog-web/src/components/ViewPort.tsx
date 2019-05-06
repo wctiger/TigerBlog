@@ -16,7 +16,8 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 3rem;
-  margin-bottom: 6rem;
+  margin-bottom: 4rem;
+  padding-bottom: 2rem;
   min-height: 80vh;
 `;
 

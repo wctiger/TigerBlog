@@ -10,4 +10,8 @@ export class ContextViewModel {
     message: string;
   } = null;
   public setGlobalMessage: (message: any) => void;
+
+  //testing
+  public testPostContent: string = '';
+  public setTestPostContent: (content: string) => void;
 }
