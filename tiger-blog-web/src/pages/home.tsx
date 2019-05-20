@@ -1,30 +1,23 @@
 import React from 'react';
-import FeaturedPost from '../components/FeaturedPost';
 import BlogPost from '../components/BlogPost';
-import { MOCKDATA } from '../models/mock';
+import DataLoad from '../components/DataLoad';
+import FeaturedPost from '../components/FeaturedPost';
+import { PostService } from '../services';
 
 const Home = () => {
-  const featured = MOCKDATA[1];
   return (
-    <div>
-      <FeaturedPost
-        post={{
-          ...featured,
-          CreatedTime: new Date(featured.CreatedTime),
-          UpdatedTime: new Date(featured.UpdatedTime)
-        }}
-      />
-      {MOCKDATA.slice(0, 5).map(post => (
-        <BlogPost
-          key={post.PostId}
-          post={{
-            ...post,
-            CreatedTime: new Date(post.CreatedTime),
-            UpdatedTime: new Date(post.UpdatedTime)
-          }}
-        />
-      ))}
-    </div>
+    <DataLoad
+      request={PostService.getSummary}
+      spinnerSize={60}
+      render={posts => (
+        <React.Fragment>
+          <FeaturedPost post={posts[0]} />
+          {posts.slice(1).map(post => (
+            <BlogPost key={post.PostId} post={post} />
+          ))}
+        </React.Fragment>
+      )}
+    />
   );
 };
 

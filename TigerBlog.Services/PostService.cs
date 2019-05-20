@@ -22,9 +22,9 @@ namespace TigerBlog.Services
             return result > 0;
         }
 
-        public Task<IEnumerable<Post>> GetAllPostsAsync()
+        public async Task<IEnumerable<Post>> GetAllPostsAsync()
         {
-            throw new NotImplementedException();
+            return await _postRepository.GetAll();
         }
 
         public async Task<IEnumerable<Post>> GetAllPostsByOwnerAsync(int userId)
@@ -32,9 +32,9 @@ namespace TigerBlog.Services
             return await _postRepository.GetAllByOwner(userId);
         }
 
-        public Task<IEnumerable<Post>> GetAllSummaryAsync()
+        public async Task<IEnumerable<Post>> GetAllSummaryAsync()
         {
-            throw new NotImplementedException();
+            return await _postRepository.GetAllSummary();
         }
 
         public async Task<IEnumerable<Post>> GetAllSummaryByOwnerAsync(int userId)

@@ -9,4 +9,6 @@ export interface UserModel {
   UpdatedTime?: Date;
 
   RememberMe?: boolean;
+
+  Token?: string; //UI field
 }

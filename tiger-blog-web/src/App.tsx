@@ -12,6 +12,7 @@ import NewPost from './pages/new-post';
 import GlobalStyle from './styles/components/GlobalStyle';
 import defaultTheme from './styles/themes/default';
 import { ContextViewModel } from './models/context';
+import HttpBase from './components/HttpBase';
 
 export const AppContext = React.createContext<ContextViewModel>(
   new ContextViewModel()
@@ -41,18 +42,20 @@ const App = () => {
     <AppContext.Provider value={appState}>
       <MuiThemeProvider theme={theme}>
         <ThemeProvider theme={theme}>
-          <Router>
-            <GlobalStyle />
-            <TopBar />
-            <ViewPort>
-              <Route path="/" exact component={Home} />
-              <Route path="/new" exact component={NewPost} />
-              <Route path="/edit/:id" exact component={NewPost} />
-              <Route path="/posts/:id" component={Post} />
-            </ViewPort>
-            <BackToTop />
-            <Footer />
-          </Router>
+          <HttpBase>
+            <Router>
+              <GlobalStyle />
+              <TopBar />
+              <ViewPort>
+                <Route path="/" exact component={Home} />
+                <Route path="/new" exact component={NewPost} />
+                <Route path="/edit/:id" exact component={NewPost} />
+                <Route path="/posts/:id" component={Post} />
+              </ViewPort>
+              <BackToTop />
+              <Footer />
+            </Router>
+          </HttpBase>
         </ThemeProvider>
       </MuiThemeProvider>
     </AppContext.Provider>

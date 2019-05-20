@@ -8,6 +8,7 @@ const scroll = () => {
   let delay = 0;
   for (; scrollCounter >= 0; scrollCounter--) {
     delay = delay + 16.66;
+    // scroll at: 0*delay, 1*delay, 2*delay... n*delay to make a smooth effect
     setTimeout(() => {
       window.scroll(0, window.pageYOffset - 50); // 50: 50px
     }, delay);

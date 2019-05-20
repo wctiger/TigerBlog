@@ -1,26 +1,34 @@
 ﻿using AutoMapper;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 using TigerBlog.Models.DTO;
 using TigerBlog.Models.Interface.Infrastructure;
 using TigerBlog.Models.Interface.Repository;
 using TigerBlog.Models.ViewModel;
-using System.Linq;
 
 namespace TigerBlog.Repositories
 {
     public class PostRepository : RepositoryBase, IPostRepository
-    {        
-        public PostRepository(IMapper mapper, ISqlContext context) 
-            :base(mapper, context)
-        {  }
+    {
+        public PostRepository(IMapper mapper, ISqlContext context)
+            : base(mapper, context)
+        { }
 
         public Task<int> DeleteAsync(int id)
         {
             string command = @"DELETE FROM Posts WHERE PostId = @PostId";
             return DbContext.ExecuteNonQueryAsync(command, new { PostId = id });
+        }
+
+        public async Task<IEnumerable<Post>> GetAll()
+        {
+            string query = @"SELECT PostId, Owner, Title, Summary, Content, CreatedTime, UpdatedTime 
+                             FROM Posts";
+
+            var result = await DbContext.ExecuteQueryAsync<PostDTO>(query);
+            return Mapper.Map<IEnumerable<Post>>(result);
         }
 
         public async Task<IEnumerable<Post>> GetAllByOwner(int userId)
@@ -33,6 +41,16 @@ namespace TigerBlog.Repositories
             return Mapper.Map<IEnumerable<Post>>(result);
         }
 
+        public async Task<IEnumerable<Post>> GetAllSummary()
+        {
+            string query = @"SELECT PostId, Owner, Title, Summary, CreatedTime, UpdatedTime 
+                             FROM Posts 
+                             ORDER BY UpdatedTime DESC";
+
+            var result = await DbContext.ExecuteQueryAsync<PostDTO>(query);
+            return Mapper.Map<IEnumerable<Post>>(result);
+        }
+
         public async Task<IEnumerable<Post>> GetAllSummaryByOwner(int userId)
         {
             string query = @"SELECT PostId, Owner, Title, Summary, CreatedTime, UpdatedTime 
@@ -41,7 +59,7 @@ namespace TigerBlog.Repositories
 
             var result = await DbContext.ExecuteQueryAsync<PostDTO>(query, new { UserId = userId });
             return Mapper.Map<IEnumerable<Post>>(result);
-        }        
+        }
 
         public Task<int> InsertAsync(Post viewmodel)
         {

@@ -1,68 +1,27 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
-import LoadingOverlay from '../styles/components/LoadingOverlay';
-import { PostModel } from '../models/post';
-import PostHeader from '../components/PostHeader';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import DataLoad from '../components/DataLoad';
 import PostContent from '../components/PostContent';
-import moment from 'moment';
-import { MOCKPOST } from '../models/mock';
-import { AppContext } from '../App';
+import PostHeader from '../components/PostHeader';
+import { PostService } from '../services';
 
-interface IState {
-  isLoading: boolean;
-  post: PostModel;
-}
+interface IProps extends RouteComponentProps<any> {}
 
-class Post extends React.Component<any, IState> {
-  state = {
-    isLoading: true,
-    post: null
-  };
-  constructor(props) {
-    super(props);
-  }
-
-  componentDidMount() {
-    setTimeout(() => {
-      this.setState({
-        isLoading: false,
-        post: {
-          PostId: 100,
-          Title: 'Test Post - How did I make up this site 😎',
-          Owner: 'vvctiger',
-          Summary: '🍕🍔😂😂',
-          IsArchived: false,
-          Content: '',
-          CreatedTime: moment('2019-01-01').toDate(),
-          UpdatedTime: moment('2019-01-01').toDate()
-        }
-      });
-    }, 500);
-  }
-
-  render() {
-    return (
-      <React.Fragment>
-        {this.state.isLoading ? (
-          <LoadingOverlay size={60} />
-        ) : (
-          <AppContext.Consumer>
-            {context => (
-              <div>
-                <PostHeader post={this.state.post} />
-                <PostContent
-                  post={{
-                    ...this.state.post,
-                    Content: context.testPostContent
-                  }}
-                />
-              </div>
-            )}
-          </AppContext.Consumer>
-        )}
-      </React.Fragment>
-    );
-  }
-}
+const Post: React.FunctionComponent<IProps> = props => {
+  return (
+    <DataLoad
+      request={() => PostService.get({ id: props.match.params.id })}
+      spinnerSize={60}
+      render={post => (
+        <div>
+          <PostHeader post={post} />
+          <PostContent
+            post={{ ...post, Content: decodeURIComponent(post.Content) }}
+          />
+        </div>
+      )}
+    />
+  );
+};
 
 export default withRouter(Post);

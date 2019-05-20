@@ -25,7 +25,7 @@ namespace TigerBlog.Services
             _hashKey = appSettings.Value.HashKey;
             _secret = appSettings.Value.APISecret;
         }
-        public async Task<string> AuthenticateAsync(string username, string password)
+        public async Task<User> AuthenticateAsync(string username, string password)
         {
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
                 throw new ArgumentNullException("empty user name or password");
@@ -38,11 +38,12 @@ namespace TigerBlog.Services
             if (!PasswordHelper.VerifyPasswordHash(password, _hashKey, user.Password))
                 throw new AuthException("Incorrect Password, Try Again");
 
-            return CreateToken(user);
+            user.Token = CreateToken(user.UserId.ToString());
+            return user;
         }
 
         // JWT token auth http://jasonwatmore.com/post/2018/08/14/aspnet-core-21-jwt-authentication-tutorial-with-example-api
-        private string CreateToken(User user)
+        private string CreateToken(string userId)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.UTF8.GetBytes(_secret);
@@ -50,7 +51,7 @@ namespace TigerBlog.Services
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, user.UserId.ToString())
+                    new Claim(ClaimTypes.Name, userId)
                 }),
                 Expires = DateTime.Now.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

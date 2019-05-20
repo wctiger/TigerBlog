@@ -31,7 +31,8 @@ namespace TigerBlog.API
         {
             services.AddAutoMapper(cfg =>
             {
-                cfg.CreateMap<DateTime, string>().ConvertUsing(dt => dt.ToString("yyyy-MM-dd HH:mm:ss"));                
+                cfg.CreateMap<DateTime, string>().ConvertUsing(dt => dt.ToString("yyyy-MM-dd HH:mm:ss"));
+                cfg.CreateMap<UserDTO, User>().ForMember("Token", opt => opt.Ignore());
             });
         }        
     }    

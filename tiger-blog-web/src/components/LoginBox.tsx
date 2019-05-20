@@ -10,10 +10,11 @@ import {
   Input,
   InputLabel
 } from '@material-ui/core';
-import React, { useState, useContext } from 'react';
-import { UserModel } from '../models/user';
-import LoadingOverlay from '../styles/components/LoadingOverlay';
+import React, { useContext, useState } from 'react';
 import { AppContext } from '../App';
+import { UserModel } from '../models/user';
+import { AuthService, User } from '../services';
+import LoadingOverlay from '../styles/components/LoadingOverlay';
 
 interface IProps {
   isOpen: boolean;
@@ -41,11 +42,17 @@ const LoginBox: React.FunctionComponent<IProps> = props => {
           onSubmit={e => {
             e.preventDefault();
             setIsLoading(true);
-            handleLogin(userModel, () => {
-              context.setUser(userModel);
-              setIsLoading(false);
-              props.close();
-            });
+            handleLogin(
+              userModel,
+              authedUser => {
+                context.setUser(authedUser);
+                setIsLoading(false);
+                props.close();
+              },
+              reason => {
+                context.setGlobalMessage(reason.message || reason);
+              }
+            );
           }}
         >
           <DialogContent>
@@ -98,10 +105,11 @@ const LoginBox: React.FunctionComponent<IProps> = props => {
   );
 };
 
-const handleLogin = (user: UserModel, successCb: any) => {
-  setTimeout(() => {
-    successCb();
-  }, 1500);
+const handleLogin = (user: UserModel, successCb: any, failedCb: any) => {
+  AuthService.authenticate({ user: new User(user) }).then(
+    authedUser => successCb(authedUser),
+    reason => failedCb(reason)
+  );
 };
 
 export default LoginBox;

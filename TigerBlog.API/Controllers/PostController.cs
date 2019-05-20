@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using TigerBlog.Models.Interface.Services;
 using TigerBlog.Models.ViewModel;
 
 namespace TigerBlog.API.Controllers
-{    
+{
     [Route("api/[controller]")]
     [ApiController]
     public class PostController : ControllerBase
@@ -20,30 +17,25 @@ namespace TigerBlog.API.Controllers
             _postService = postService;
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
             return Ok(await _postService.GetPostAsync(id));
         }
 
+        [AllowAnonymous]
         [HttpGet("GetSummary")]
         public async Task<IActionResult> GetSummary()
-        {
-            if(!int.TryParse(HttpContext.User.Identity.Name, out int userId))
-            {
-                return ValidationProblem();
-            }
-            return Ok(await _postService.GetAllSummaryByOwnerAsync(userId));
+        {            
+            return Ok(await _postService.GetAllSummaryAsync());
         }
 
+        [AllowAnonymous]
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
-            if (!int.TryParse(HttpContext.User.Identity.Name, out int userId))
-            {
-                return ValidationProblem();
-            }
-            return Ok(await _postService.GetAllPostsByOwnerAsync(userId));
+            return Ok(await _postService.GetAllPostsAsync());
         }
 
         [HttpPost("Create")]
@@ -73,7 +65,6 @@ namespace TigerBlog.API.Controllers
             post.Owner = userId;
             return Ok(await _postService.UpdatePostAsync(post));
         }
-
 
     }
 }

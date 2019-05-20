@@ -48,7 +48,7 @@ const TopBar: React.FunctionComponent<any> = props => {
             anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
             className={context.globalMessage.type}
             open={true}
-            autoHideDuration={5000}
+            autoHideDuration={10000}
             onClose={() => context.setGlobalMessage(null)}
             message={<span>{context.globalMessage.message}</span>}
           />
