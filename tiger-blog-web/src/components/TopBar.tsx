@@ -86,16 +86,16 @@ const StyledIconButton = styled<any>(IconButton)`
 const StyledSnackbar = styled<any>(Snackbar)`
   margin-top: 5rem;
 
-  &.success {
+  &.success > div {
     background-color: ${green[600]};
   }
-  &.error {
+  &.error > div {
     background-color: ${props => props.theme.palette.error.dark};
   }
-  &.info {
+  &.info > div {
     background-color: ${props => props.theme.palette.primary.dark};
   }
-  &.warning {
+  &.warning > div {
     background-color: ${amber[600]};
   }
 `;

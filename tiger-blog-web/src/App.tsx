@@ -29,9 +29,6 @@ const App = () => {
   appState.setGlobalMessage = message => {
     setAppState({ ...appState, globalMessage: message });
   };
-  appState.setTestPostContent = content => {
-    setAppState({ ...appState, testPostContent: content });
-  };
 
   const theme = createMuiTheme({
     ...defaultTheme,

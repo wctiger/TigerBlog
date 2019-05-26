@@ -16,6 +16,7 @@ import LoginBox from './LoginBox';
 import { AppContext } from '../App';
 import { ExitToApp, Create } from '@material-ui/icons';
 import { withRouter, RouteComponentProps } from 'react-router';
+import { APP_CONSTANT } from '../constants';
 
 interface IProps extends RouteComponentProps {
   className?: string;
@@ -71,6 +72,7 @@ const User: React.FunctionComponent<IProps> = props => {
                   onClick={() => {
                     setMenuOpen(false);
                     context.setUser(null);
+                    localStorage.removeItem(APP_CONSTANT.AUTHENTICATED_USER);
                   }}
                 >
                   <ListItemIcon>
