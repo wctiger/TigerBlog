@@ -37,11 +37,15 @@ class BackToTop extends React.Component {
   render() {
     return (
       <Fade in={this.state.show}>
-        <Tooltip title="Back To Top" placement="left">
-          <StyledFab color="secondary" onClick={() => scroll()}>
-            <ArrowUpward style={{ transform: 'translateY(3px)' }} />
-          </StyledFab>
-        </Tooltip>
+        {this.state.show ? (
+          <Tooltip title="Back To Top" placement="left">
+            <StyledFab color="secondary" onClick={() => scroll()}>
+              <ArrowUpward style={{ transform: 'translateY(3px)' }} />
+            </StyledFab>
+          </Tooltip>
+        ) : (
+          <div />
+        )}
       </Fade>
     );
   }

@@ -1,52 +1,44 @@
-import React, { useState } from 'react';
-import { PostModel } from '../models/post';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import CKEditor from '@ckeditor/ckeditor5-react';
-import { Button } from '@material-ui/core';
-import { PostService, Post } from '../services';
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import { PostModel } from '../models/post';
 
 interface IProps {
-  post: PostModel;
+  post?: PostModel;
+  onContentChange?: (post: PostModel) => void;
 }
 
-const PostEditor = props => {
+const PostEditor: React.FunctionComponent<IProps> = props => {
   const [editorState, setEditorState] = useState({
     editor: null,
     disabled: false
   });
   return (
-    <React.Fragment>
+    <EditorWrapper>
       <CKEditor
         editor={ClassicEditor}
-        data={props.post || '<p>Start Creating New Posts!</p>'}
+        data={
+          (props.post && props.post.Content) ||
+          '<p>Start Creating New Post!</p>'
+        }
         onInit={editor => {
           setEditorState({ ...editorState, editor: editor });
         }}
+        onChange={(event, editor) => {
+          const content = editor.getData();
+          props.onContentChange({ ...props.post, Content: content });
+        }}
         disabled={editorState.disabled}
       />
-      <Button
-        onClick={() => {
-          const content = editorState.editor.getData();
-          handleSave({ content });
-        }}
-      >
-        SAVE
-      </Button>
-    </React.Fragment>
+    </EditorWrapper>
   );
 };
 
-const handleSave = data => {
-  const post = new Post({
-    Owner: 6,
-    Title: 'REAL TEST POST!!😎',
-    Summary: 'Let us see what we can get from here. 🤣😘🤷‍♀️',
-    Content: data.content
-  });
-  PostService.insert({ post }).then(
-    success => console.log(success),
-    rejected => console.warn(rejected)
-  );
-};
+const EditorWrapper = styled.div`
+  .ck-content {
+    min-height: 400px;
+  }
+`;
 
 export default PostEditor;

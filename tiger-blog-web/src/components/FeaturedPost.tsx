@@ -57,7 +57,6 @@ const Foreground = styled.div`
   }
 
   & > p {
-    display: inline-block;
     margin-right: 2rem;
     background-color: rgba(250, 250, 250, 0.2);
     padding: 0.5rem 1.5rem;
