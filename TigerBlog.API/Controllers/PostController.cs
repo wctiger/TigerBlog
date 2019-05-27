@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using TigerBlog.Models.Interface.Services;
 using TigerBlog.Models.ViewModel;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace TigerBlog.API.Controllers
 {
@@ -19,51 +21,51 @@ namespace TigerBlog.API.Controllers
 
         [AllowAnonymous]
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<ActionResult<Post>> Get(int id)
         {
-            return Ok(await _postService.GetPostAsync(id));
+            return await _postService.GetPostAsync(id);
         }
 
         [AllowAnonymous]
         [HttpGet("GetSummary")]
-        public async Task<IActionResult> GetSummary()
+        public async Task<ActionResult<List<Post>>> GetSummary()
         {            
-            return Ok(await _postService.GetAllSummaryAsync());
+            return (await _postService.GetAllSummaryAsync()).ToList();
         }
 
         [AllowAnonymous]
         [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAll()
+        public async Task<ActionResult<List<Post>>> GetAll()
         {
-            return Ok(await _postService.GetAllPostsAsync());
+            return (await _postService.GetAllPostsAsync()).ToList();
         }
 
         [HttpPost("Create")]
-        public async Task<IActionResult> Insert(Post post)
+        public async Task<ActionResult<bool>> Insert(Post post)
         {
             if (!int.TryParse(HttpContext.User.Identity.Name, out int userId))
             {
                 return ValidationProblem();
             }
             post.Owner = userId;
-            return Ok(await _postService.InsertPostAsync(post));
+            return await _postService.InsertPostAsync(post);
         }
 
         [HttpDelete("Delete/{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<ActionResult<bool>> Delete(int id)
         {
-            return Ok(await _postService.DeletePostAsync(id));
+            return await _postService.DeletePostAsync(id);
         }
 
         [HttpPut("Update")]
-        public async Task<IActionResult> Update(Post post)
+        public async Task<ActionResult<Post>> Update(Post post)
         {
             if (!int.TryParse(HttpContext.User.Identity.Name, out int userId))
             {
                 return ValidationProblem();
             }
             post.Owner = userId;
-            return Ok(await _postService.UpdatePostAsync(post));
+            return await _postService.UpdatePostAsync(post);
         }
 
     }

@@ -25,11 +25,9 @@ namespace TigerBlog.API.Controllers
         }
 
         [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAll()
-        {
-            _logger.LogInformation($"test get all");
-            var a = HttpContext.User.Identity.Name;
-            return Ok(await _userService.GetAllUsersAsync());
+        public async Task<ActionResult<List<User>>> GetAll()
+        {                        
+            return (await _userService.GetAllUsersAsync()).ToList();
         }
 
         // GET: api/User/5
@@ -41,10 +39,9 @@ namespace TigerBlog.API.Controllers
 
         // POST: api/User
         [HttpPost("Create")]
-        public async Task<IActionResult> Post(User user)
-        {
-            _logger.LogInformation($"test insert");
-            return Ok(await _userService.InsertUserAsync(user));
+        public async Task<ActionResult<bool>> Post(User user)
+        {            
+            return await _userService.InsertUserAsync(user);
         }
         
         [HttpPut("Update")]
@@ -55,9 +52,9 @@ namespace TigerBlog.API.Controllers
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("Delete/{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<ActionResult<bool>> Delete(int id)
         {
-            return Ok(await _userService.DeleteUserAsync(id));
+            return await _userService.DeleteUserAsync(id);
         }
     }
 }

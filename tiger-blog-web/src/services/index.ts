@@ -38,7 +38,7 @@ export class AuthService {
       user?: User;
     } = <any>{},
     options: IRequestOptions = {}
-  ): Promise<any> {
+  ): Promise<User> {
     return new Promise((resolve, reject) => {
       const configs: IRequestConfig = { ...options, method: 'post' };
       configs.headers = {
@@ -63,6 +63,45 @@ export class AuthService {
   }
 }
 
+export class FileService {
+  /**
+   *
+   */
+  static uploadFile(
+    params: {
+      /**  */
+      file?: any;
+    } = <any>{},
+    options: IRequestOptions = {}
+  ): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const configs: IRequestConfig = { ...options, method: 'post' };
+      configs.headers = {
+        ...options.headers,
+        'Content-Type': 'multipart/form-data'
+      };
+      let url = '/api/File';
+
+      configs.url = url;
+
+      let data = null;
+      data = new FormData();
+      if (params['file']) {
+        data.append('file', params['file']);
+      }
+
+      configs.data = data;
+      axios(configs)
+        .then(res => {
+          resolve(res.data);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
+  }
+}
+
 export class PostService {
   /**
    *
@@ -73,7 +112,7 @@ export class PostService {
       id: number;
     } = <any>{},
     options: IRequestOptions = {}
-  ): Promise<any> {
+  ): Promise<Post> {
     return new Promise((resolve, reject) => {
       const configs: IRequestConfig = { ...options, method: 'get' };
       configs.headers = {
@@ -100,7 +139,7 @@ export class PostService {
   /**
    *
    */
-  static getSummary(options: IRequestOptions = {}): Promise<any> {
+  static getSummary(options: IRequestOptions = {}): Promise<any[]> {
     return new Promise((resolve, reject) => {
       const configs: IRequestConfig = { ...options, method: 'get' };
       configs.headers = {
@@ -126,7 +165,7 @@ export class PostService {
   /**
    *
    */
-  static getAll(options: IRequestOptions = {}): Promise<any> {
+  static getAll(options: IRequestOptions = {}): Promise<any[]> {
     return new Promise((resolve, reject) => {
       const configs: IRequestConfig = { ...options, method: 'get' };
       configs.headers = {
@@ -158,7 +197,7 @@ export class PostService {
       post?: Post;
     } = <any>{},
     options: IRequestOptions = {}
-  ): Promise<any> {
+  ): Promise<boolean> {
     return new Promise((resolve, reject) => {
       const configs: IRequestConfig = { ...options, method: 'post' };
       configs.headers = {
@@ -190,7 +229,7 @@ export class PostService {
       id: number;
     } = <any>{},
     options: IRequestOptions = {}
-  ): Promise<any> {
+  ): Promise<boolean> {
     return new Promise((resolve, reject) => {
       const configs: IRequestConfig = { ...options, method: 'delete' };
       configs.headers = {
@@ -223,7 +262,7 @@ export class PostService {
       post?: Post;
     } = <any>{},
     options: IRequestOptions = {}
-  ): Promise<any> {
+  ): Promise<Post> {
     return new Promise((resolve, reject) => {
       const configs: IRequestConfig = { ...options, method: 'put' };
       configs.headers = {
@@ -252,7 +291,7 @@ export class UserService {
   /**
    *
    */
-  static getAll(options: IRequestOptions = {}): Promise<any> {
+  static getAll(options: IRequestOptions = {}): Promise<any[]> {
     return new Promise((resolve, reject) => {
       const configs: IRequestConfig = { ...options, method: 'get' };
       configs.headers = {
@@ -317,7 +356,7 @@ export class UserService {
       user?: User;
     } = <any>{},
     options: IRequestOptions = {}
-  ): Promise<any> {
+  ): Promise<boolean> {
     return new Promise((resolve, reject) => {
       const configs: IRequestConfig = { ...options, method: 'post' };
       configs.headers = {
@@ -381,7 +420,7 @@ export class UserService {
       id: number;
     } = <any>{},
     options: IRequestOptions = {}
-  ): Promise<any> {
+  ): Promise<boolean> {
     return new Promise((resolve, reject) => {
       const configs: IRequestConfig = { ...options, method: 'delete' };
       configs.headers = {
@@ -432,6 +471,9 @@ export class User {
   /**  */
   UpdatedTime: string;
 
+  /**  */
+  Token: string;
+
   constructor(data?: any) {
     if (data) {
       this['UserId'] = data['UserId'];
@@ -442,6 +484,7 @@ export class User {
       this['Email'] = data['Email'];
       this['CreatedTime'] = data['CreatedTime'];
       this['UpdatedTime'] = data['UpdatedTime'];
+      this['Token'] = data['Token'];
     }
   }
 }

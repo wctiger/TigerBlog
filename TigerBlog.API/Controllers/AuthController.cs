@@ -25,11 +25,11 @@ namespace TigerBlog.API.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Authenticate(User user)
+        public async Task<ActionResult<User>> Authenticate(User user)
         {
             try
             {
-                return Ok(await _authService.AuthenticateAsync(user.UserName, user.Password));
+                return await _authService.AuthenticateAsync(user.UserName, user.Password);
             }
             catch (AuthException authEx)
             {
