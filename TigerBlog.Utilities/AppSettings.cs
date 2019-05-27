@@ -9,5 +9,6 @@ namespace TigerBlog.Utilities
         public string ConnectionString { get; set; } = "";
         public string HashKey { get; set; } = "";
         public string APISecret { get; set; } = "";
+        public string DropboxAPIToken { get; set; } = "";
     }
 }

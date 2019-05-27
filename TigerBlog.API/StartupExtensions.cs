@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TigerBlog.Infrastructure.Database;
+using TigerBlog.Infrastructure.Dropbox;
 using TigerBlog.Models.DTO;
 using TigerBlog.Models.Interface.Infrastructure;
 using TigerBlog.Models.Interface.Repository;
@@ -19,12 +20,16 @@ namespace TigerBlog.API
     {
         public static void RegisterDependencies(this IServiceCollection services)
         {
+            services.AddSingleton<IFileStorageClient, DropboxStorageClient>();
             services.AddScoped<ISqlContext, SqliteContext>();
+
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IPostRepository, PostRepository>();
+
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAuthService, AuthService>();
-            services.AddScoped<IPostRepository, PostRepository>();
             services.AddScoped<IPostService, PostService>();
+            services.AddScoped<IFileService, FileService>();
         }
 
         public static void RegisterAutoMapper(this IServiceCollection services)
