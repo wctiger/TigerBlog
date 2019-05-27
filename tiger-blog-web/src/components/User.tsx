@@ -38,50 +38,54 @@ const User: React.FunctionComponent<IProps> = props => {
             </StyledAvatar>
           </Tooltip>
           <Fade in={menuOpen}>
-            <UserMenu>
-              <List>
-                <ListItem dense>
-                  <ListItemIcon>
-                    <Avatar style={{ width: '2rem', height: '2rem' }}>
-                      {context.authenticatedUser.DisplayName
-                        ? context.authenticatedUser.DisplayName[0]
-                        : 'U'}
-                    </Avatar>
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={
-                      context.authenticatedUser.DisplayName || 'Test User'
-                    }
-                  />
-                </ListItem>
-                <Divider />
-                <ListItem
-                  button
-                  onClick={() => {
-                    props.history.push('/new');
-                    setMenuOpen(false);
-                  }}
-                >
-                  <ListItemIcon>
-                    <Create />
-                  </ListItemIcon>
-                  <ListItemText primary="New Post" />
-                </ListItem>
-                <ListItem
-                  button
-                  onClick={() => {
-                    setMenuOpen(false);
-                    context.setUser(null);
-                    localStorage.removeItem(APP_CONSTANT.AUTHENTICATED_USER);
-                  }}
-                >
-                  <ListItemIcon>
-                    <ExitToApp />
-                  </ListItemIcon>
-                  <ListItemText primary="Log Out" />
-                </ListItem>
-              </List>
-            </UserMenu>
+            {menuOpen ? (
+              <UserMenu>
+                <List>
+                  <ListItem dense>
+                    <ListItemIcon>
+                      <Avatar style={{ width: '2rem', height: '2rem' }}>
+                        {context.authenticatedUser.DisplayName
+                          ? context.authenticatedUser.DisplayName[0]
+                          : 'U'}
+                      </Avatar>
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={
+                        context.authenticatedUser.DisplayName || 'Test User'
+                      }
+                    />
+                  </ListItem>
+                  <Divider />
+                  <ListItem
+                    button
+                    onClick={() => {
+                      props.history.push('/new');
+                      setMenuOpen(false);
+                    }}
+                  >
+                    <ListItemIcon>
+                      <Create />
+                    </ListItemIcon>
+                    <ListItemText primary="New Post" />
+                  </ListItem>
+                  <ListItem
+                    button
+                    onClick={() => {
+                      setMenuOpen(false);
+                      context.setUser(null);
+                      localStorage.removeItem(APP_CONSTANT.AUTHENTICATED_USER);
+                    }}
+                  >
+                    <ListItemIcon>
+                      <ExitToApp />
+                    </ListItemIcon>
+                    <ListItemText primary="Log Out" />
+                  </ListItem>
+                </List>
+              </UserMenu>
+            ) : (
+              <div />
+            )}
           </Fade>
         </React.Fragment>
       ) : (

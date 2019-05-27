@@ -14,8 +14,7 @@ const AppLink = styled(RouterLink)`
   }
 
   &:active {
-    /* background: ${props => props.theme.palette.secondary.light}; */
-    background-color: red;
+    background: ${props => props.theme.palette.secondary.light};
   }
 
   &:link,

@@ -60,7 +60,7 @@ const NewPost = props => {
         </Button>
         <Button
           variant="contained"
-          onClick={() => console.log('cancel')}
+          onClick={() => props.history.push('/')}
           color="secondary"
         >
           Cancel
